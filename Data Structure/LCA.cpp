@@ -50,7 +50,7 @@ struct LCA
             }
         }
         
-        dfs(1, -1, 0);
+        dfs(root, -1, 0);
         
         sparse_table();
     }
@@ -68,7 +68,7 @@ struct LCA
         if(u == v) return u;
         
 
-        ll lo = 0, hi = depth[u], ans = 1;
+        ll lo = 0, hi = depth[u], ans = root;
 
         while (lo < hi)
         {
