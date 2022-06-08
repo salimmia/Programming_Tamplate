@@ -13,7 +13,7 @@ struct LCA
         for(auto v: g[u]){
             if(v.first == p) continue;
             
-            cost[v.first][0] = v.second;
+            L[v.first][0] = v.second;
             dfs(v.first, u, d + 1);
         }
     }
@@ -26,7 +26,7 @@ struct LCA
 
                 if(first_parent != -1){
                     sp_par[u][k] = sp_par[first_parent][k - 1];
-                    cost[u][k] = max(cost[u][k - 1], cost[first_parent][k - 1]);
+                    L[u][k] = max(L[u][k - 1], L[first_parent][k - 1]);
                 }
             }
         }
