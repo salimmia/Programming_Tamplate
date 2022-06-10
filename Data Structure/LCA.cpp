@@ -1,6 +1,6 @@
 vector<pair<int, int>>g[N];
 int depth[N], maxcost[N][20], mncost[N][20], LOG, par[N][20], L[N][20];
-/// check the constrains
+/// check the Constraints
 
 struct LCA
 {
