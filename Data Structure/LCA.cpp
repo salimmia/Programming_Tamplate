@@ -1,3 +1,7 @@
+vector<pair<int, int>>g[N];
+int depth[N], maxcost[N][20], mncost[N][20], LOG, par[N][20], L[N][20];
+/// check the constrains
+
 struct LCA
 {
     bool checkbit(int mask, int k)
@@ -7,14 +11,17 @@ struct LCA
 
     void dfs(int u, int p, int d)
     {
-        sp_par[u][0] = p;
+        par[u][0] = p;
         depth[u] = d;
 
-        for(auto v: g[u]){
-            if(v.first == p) continue;
+        for(auto it: g[u]){
+            int v = it.first;
+            int w = it.second;
             
-            L[v.first][0] = v.second;
-            dfs(v.first, u, d + 1);
+            if(v == p) continue;
+            
+            L[v][0] = w;
+            dfs(v, u, d + 1);
         }
     }
 
@@ -22,34 +29,29 @@ struct LCA
     {
         for(int k = 1; (1 << k) <= n; k++){
             for(int u = 1; u <= n; u++){
-                int first_parent = sp_par[u][k - 1];
+                int first_parent = par[u][k - 1];
 
                 if(first_parent != -1){
-                    sp_par[u][k] = sp_par[first_parent][k - 1];
+                    par[u][k] = par[first_parent][k - 1];
                     L[u][k] = max(L[u][k - 1], L[first_parent][k - 1]);
                 }
+                else par[u][k] = -1;
             }
         }
     }
 
     ll Kth_parent(int u, int k)
     {
-        FOR(i, 0, 20){
+        for(int i = LOG; i >= 0; i--){
             if(checkbit(k, i)){
-                u = sp_par[u][i];
+                u = par[u][i];
             }
         }
         return u;
     }
 
     void build_lca(int root)
-    {
-        for(int i = 0; i <= n; i++){
-            for(int j = 0; (1 << j) <= n; j++){
-                sp_par[i][j] = -1;
-            }
-        }
-        
+    {        
         dfs(root, -1, 0);
         
         sparse_table();
@@ -57,52 +59,76 @@ struct LCA
 
     ll getlca(int root, int u, int v)
     {
-        if(depth[u] > depth[v]){
-            u = Kth_parent(u, depth[u] - depth[v]);
+        if(depth[u] < depth[v]) swap(u, v);
+        
+        int log = 1;
+        while(1){
+            int next = log+1;
+            
+            if((1 << next) > depth[u]) break;
+            
+            log++;
         }
-        else if(depth[u] < depth[v]){
-            v = Kth_parent(v, depth[v] - depth[u]);
+        
+        for(int i = log;i >= 0; i--){
+            if(depth[u] - (1 << i) >= depth[v]){
+                u = par[u][i];
+            }
         }
-
         
         if(u == v) return u;
-        
 
-        ll lo = 0, hi = depth[u], ans = root;
-
-        while (lo < hi)
+        for(int i = log; i >= 0; i--)
         {
-            ll mid = (lo + hi) >> 1;
-
-            int p = Kth_parent(u, mid);
-            int q = Kth_parent(v, mid);
-
-            if(p == q){
-                hi = mid;
-                ans = p;
+            if(par[u][i] != -1 && par[u][i] != par[v][i]){
+                u = par[u][i];
+                v = par[v][i];
             }
-            else lo = mid + 1;
         }
-        return ans;
+        return par[v][0];
     }
-    int query(int u, int v, int lca)
+    
+    int dist(int root, int u, int v)
     {
-        int ret = 0;
-        int dis = depth[u] - depth[lca];
+        return depth[u] + depth[v] - 2 * depth[getlca(root, u, v)];
+    }
+    
+    pair<int, int> query(int u,int v)
+    {
+        if(u == v) return 0;
         
-        for(int i = 18; i >= 0; i--){
-            if(checkbit(dis, i)){
-                ret = max(ret, cost[u][i]);
-                u = sp_par[u][i];
+        int mx = 0, mn = 1e9;
+        
+        if(depth[u] < depth[v]) swap(u,v);
+        
+        int diff = depth[u] - depth[v];
+        
+        ll re = 0;
+        
+        for(int i = LOG; i >= 0; i--){
+            if(diff >= (1 << i)){
+                diff -= (1 << i);
+                
+                mx = max(mx, L[u][i]);
+                
+                u = par[u][i];
             }
         }
-        dis = depth[v] - depth[lca];
-        for(int i = 18; i >= 0; i--){
-            if(checkbit(dis, i)){
-                ret = max(ret, cost[v][i]);
-                v = sp_par[v][i];
+        
+        if(u == v) return mx;
+
+        for(int i = LOG-1; i >= 0; i--){
+            if(par[u][i] != par[v][i]){
+                mx = max({mx, L[u][i], L[v][i]});
+                
+                u = par[u][i];
+                
+                v = par[v][i];
             }
         }
-        return ret;
+        
+        mx = max({mx, L[u][0], L[v][0]});
+        
+        return mx;
     }
 };
