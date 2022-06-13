@@ -1,4 +1,3 @@
-// Created by ash_98
 #include<bits/stdc++.h>
 using namespace std;
 #define mx 1000005
