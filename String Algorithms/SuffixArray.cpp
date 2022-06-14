@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define mx 1000005
+#define ll long long
 
 int wa[mx],wb[mx],wv[mx],Ws[mx];
 //(1-indexed) sa[i] = starting position (0...n-1) of ith lexicographically smallest suffix in s
