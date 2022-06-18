@@ -14,6 +14,9 @@ int dcmp(Tf x) { return abs(x) < EPS ? 0 : (x<0 ? -1 : 1);}
 struct Point {
   Ti x, y;
   Point(Ti x = 0, Ti y = 0) : x(x), y(y) {}
+  
+  void read () { scanf("%lf%lf", &x, &y); }
+  void write () { printf("%lf %lf\n", x, y); }
 
   Point operator + (const Point& u) const { return Point(x + u.x, y + u.y); }
   Point operator - (const Point& u) const { return Point(x - u.x, y - u.y); }
