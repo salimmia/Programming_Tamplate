@@ -107,7 +107,6 @@ void solve()
 int main()
 {
 	int t = 1, cs = 1;
-
 	// scanf("%d", &t);
 
 	for (int i = 1; i <= t; i++) {
