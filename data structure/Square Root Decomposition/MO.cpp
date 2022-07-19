@@ -19,45 +19,63 @@ int block_size;
 ll block_id[N];
 ll ans[N];
 ll a[N];
+int q;
 
 struct Query {
-	int l, r, id;
-	ll ans;
+    int l, r, id;
+    ll ans;
 
-	Query() {}
-	Query(int l, int r, int id) : l(l), r(r), id(id) {}
+    Query() {}
+    Query(int l, int r, int id) : l(l), r(r), id(id) {}
 
-	bool operator<(Query &other) const {
-		int cur_block = l / block_size;
-		int other_block = other.l / block_size;
+    bool operator<(Query &other) const {
+        int cur_block = l / block_size;
+        int other_block = other.l / block_size;
 
-		if (cur_block != other_block) return cur_block < other_block;
+        if (cur_block != other_block) return cur_block < other_block;
 
-		return r < other.r;
-	}
+        return r < other.r;
+    }
 } query[N];
 
 ll now;
 
 void reset()
 {
-	now = 0;
-	block_size = sqrt(n);
-	for (int i = 0; i <= block_size; i++) block_id[i] = 0;
+    now = 0;
+    block_size = sqrt(n);
+    for (int i = 0; i <= block_size; i++) block_id[i] = 0;
 }
 
 void include(int id)
 {
-	now += a[id];
+    now += a[id];
 }
 void remove(int id)
 {
-	now -= a[id];
+    now -= a[id];
 }
 
 ll get_ans()
 {
-	return now;
+    return now;
+}
+
+void compute()
+{
+    int L = 1, R = 0;
+
+    for (int i = 0; i < q; i++) {
+        int ql = query[i].l;
+        int qr = query[i].r;
+
+        while (R < qr) include(++R);
+        while (L > ql) include(--L);
+        while (L < ql) remove(L++);
+        while (R > qr) remove(R--);
+
+        ans[query[i].id] = get_ans();
+    }
 }
 
 }
@@ -65,53 +83,38 @@ using namespace MO;
 
 void solve()
 {
-	scanf("%d", &n);
+    scanf("%d", &n);
 
-	for (int i = 1; i <= n; i++) scanf("%lld", &a[i]);
+    for (int i = 1; i <= n; i++) scanf("%lld", &a[i]);
 
-	reset();
+    reset();
 
-	int q;
+    scanf("%d", &q);
 
-	scanf("%d", &q);
+    for (int i = 0; i < q; i++) {
+        int l, r;
 
-	for (int i = 0; i < q; i++) {
-		int l, r;
+        scanf("%d%d", &l, &r);
 
-		scanf("%d%d", &l, &r);
+        query[i] = Query(l, r, i);
+    }
 
-		query[i] = Query(l, r, i);
-	}
+    sort(query, query + q);
 
-	sort(query, query + q);
+    compute();
 
-	int L = 1, R = 0;
+    for (int i = 0; i < q; i++) printf("%lld\n", ans[i]);
 
-	for (int i = 0; i < q; i++) {
-		int ql = query[i].l;
-		int qr = query[i].r;
-
-		while (R < qr) include(++R);
-		while (L > ql) include(--L);
-		while (L < ql) remove(L++);
-		while (R > qr) remove(R--);
-
-		ans[query[i].id] = get_ans();
-	}
-
-	for (int i = 0; i < q; i++) printf("%lld\n", ans[i]);
-
-	return;
+    return;
 }
 
 int main()
 {
-	int t = 1, cs = 1;
-	// scanf("%d", &t);
+    int t = 1, cs = 1;
+    // scanf("%d", &t);
 
-	for (int i = 1; i <= t; i++) {
-		// printf("Case %d: ", i);
-		solve();
-	}
+    for (int i = 1; i <= t; i++) {
+        // printf("Case %d: ", i);
+        solve();
+    }
 }
-
