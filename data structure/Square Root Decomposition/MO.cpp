@@ -63,8 +63,6 @@ ll get_ans()
 
 void compute()
 {
-    reset();
-    
     int L = 1, R = 0;
 
     for (int i = 0; i < q; i++) {
