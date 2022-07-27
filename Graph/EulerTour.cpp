@@ -35,6 +35,8 @@ void dfs(int u, int p)
 
 /// Type 3: path from root to any node
 
+ll Linear[N], st[N], en[N], timer;
+
 void dfs(int u, int p)
 {
     st[u] = ++timer;
