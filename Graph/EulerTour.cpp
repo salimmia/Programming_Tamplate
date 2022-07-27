@@ -32,3 +32,19 @@ void dfs(int u, int p)
     en[u] = ++timer;
     Linear[timer] = u;
 }
+
+/// Type 3: path from root to any node
+
+void dfs(int u, int p)
+{
+    st[u] = ++timer;
+    Linear[timer] = u;
+
+    for (auto v : g[u]) {
+        if (v == p) continue;
+        dfs(v, u);
+    }
+    en[u] = timer;
+    Linear[timer] = u;
+}
+
