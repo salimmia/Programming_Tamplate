@@ -1,11 +1,12 @@
 //Dynamic CHT
 //Tested : CF 455E - Function
+// Tested : CF 319C
 
 #define ll long long int
 #define ld long double
 ll inf = 9e18 + 5;
 
-struct HullDynamic{ // Max Query
+struct HullDynamic{ // Max Query /// for min query Add(-m, -c)
 	struct line {
         ll m, b; ld x;
         ll val; bool isQuery;
