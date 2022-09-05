@@ -1,33 +1,22 @@
-#include <bits/stdc++.h>
-using namespace std;
-/// 1D BIT
-
-struct BIT {
-    int n;
-    vector<int> tree;
-    void init(int n_) {
-        n = n_;
-        tree.assign(n+1,0);
+struct Fenwick {
+    int N, K = 20; vector<long long> ft;
+    Fenwick(int n) : N(n+1), ft(n+1) {}
+    void add(int x, long long val) {
+      for (int i=x; i<N; i+=i&-i) ft[i] += val;
     }
-    void upd (int idx, int val) {
-        while (idx <= n) {
-            tree[idx] += val ;
-            idx += idx & (-idx) ;
+    long long sum(int x) {
+      long long ans = 0;
+      for (int i=x; i>0; i-=i&-i) ans += ft[i];
+      return ans;
+    }
+    ///first k st sum(k)>=x, if none returns N=n+1.
+    int get(long long x) {
+      int ans = 0;
+      for (int i=K-1; i>=0; i--) {
+        int nxt = ans + (1<<i);
+        if (nxt < N && ft[nxt] < x) {
+          ans = nxt; x -= ft[nxt];
         }
-    }
-    int query (int idx) {
-        int sum = 0 ;
-        while (idx > 0) {
-            sum += tree[idx] ;
-            idx -= idx & (-idx) ;
-        }
-        return sum ;
-    }
-    int Sum(int i, int j) {
-        return query(j)-query(i-1);
-    }
+      }
+      return ans+1; }
 };
-
-int main() {
-
-}
