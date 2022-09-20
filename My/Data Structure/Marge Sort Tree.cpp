@@ -1,8 +1,7 @@
 vector<int>Tree[mx*4];
 
 void init(int node,int be,int en){
-    Tree1[node].clear();
-    Tree2[node].clear();
+    Tree[node].clear();
     if(be==en){
         Tree1[node].push_back(a[be]);
         return;
