@@ -142,7 +142,7 @@ void solve()
     buildLCP(s, sa, n);
     for (int i = 1; i <= n; i++) cout << sa[i] << " "; cout << endl;
     for (int i = 0; i < n; i++) cout << Rank[i] << " "; cout << endl;
-    for (int i = 1; i <= n; i++) cout << LCP[i] << " ";
+    for (int i = 1; i <= n; i++) cout << LCP[i] << " "; cout << endl;
     int q;
     cin >> q;
     for (int i = 1; i <= q; i++)
