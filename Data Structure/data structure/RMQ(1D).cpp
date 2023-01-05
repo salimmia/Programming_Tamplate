@@ -17,7 +17,7 @@ void preprocess() {
             else break ;
         }
     }
-    for(int i = 2; i < N; i++) {
+    for(int i = 2; i <= n; i++) {
         lg[i] = lg[i/2] + 1;
     }
 }
