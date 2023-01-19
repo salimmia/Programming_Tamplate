@@ -9,7 +9,7 @@ ll add(ll a, ll b)
 }
 ll sub(ll a, ll b)
 {
-    a -= b;
+    a = add(a, -b);
     if (a < 0)a += mod;
     return a;
 }
