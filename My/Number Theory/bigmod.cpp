@@ -21,6 +21,18 @@ ll mul(ll a, ll b)
     return re;
 }
 
+/*
+ll mul(ll a, ll b) {
+	long long res = 0LL;
+	a = a % mod;
+	while (b > 0) {
+		if (b & 1) res = add(res, a);
+		a = add(a, a);
+		b >>= 1;
+	}
+	return res;
+}*/
+
 ll bigmod(ll a, ll b) {
     ll res = 1;
     while (b > 0) {
