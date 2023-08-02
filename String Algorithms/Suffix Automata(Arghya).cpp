@@ -1,3 +1,4 @@
+// suffix automation
 class SuffixAutomaton{
 public:
   struct state{
