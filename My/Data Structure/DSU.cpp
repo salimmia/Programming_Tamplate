@@ -1,3 +1,4 @@
+// structure of DSU
 struct dsu {
 	vector<int> p;
 	int n;
