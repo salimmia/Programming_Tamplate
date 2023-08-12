@@ -2,7 +2,7 @@
 C++ routines for Computational Geometry (2D)
 Courtesy:  nodim, imAnik, rebornplusplus, solaimanope, anachor
 */
-
+/// Geo
 #include <bits/stdc++.h>
 using namespace std;
 
