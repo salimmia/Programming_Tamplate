@@ -1,5 +1,5 @@
 
-/// iterating over all subsets : O(3^n)
+// iterating over all subsets : O(3^n)
 for (int mask = 0; mask < (1<<n); mask++){
 	F[mask] = A[0];
     /// iterate over all the subsets of the mask
