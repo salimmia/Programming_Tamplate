@@ -1,3 +1,4 @@
+// change
 namespace BCT
 {
 const int mx = 100005 ; //max(numberofedge , numberofnode )
