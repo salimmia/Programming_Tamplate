@@ -1,4 +1,4 @@
-// Point structure
+/// Point structure
 struct PT {
   ld x,y;
   PT() {}
