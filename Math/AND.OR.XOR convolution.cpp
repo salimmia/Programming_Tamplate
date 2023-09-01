@@ -1,3 +1,4 @@
+///convolution 
 struct ANDconvolution {
     ///poww(a,b,m) returns (a^b)%m
     ///XOR
